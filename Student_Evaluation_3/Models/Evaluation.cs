@@ -10,7 +10,7 @@ namespace Student_Evaluation_3.Models
     {
         public int id { get; set; }
         public User instructor { get; set; }
-        public Course Course { get; set; }
+        public Course course { get; set; }
         public String why_course { get; set; }
         public String hours_week { get; set; }
         public String life_connection { get; set; }
