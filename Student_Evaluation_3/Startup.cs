@@ -33,7 +33,7 @@ namespace Student_Evaluation_3
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<SchoolContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SchoolContext")));
+            services.AddDbContext<SchoolContext>(options => options.UseSqlServer("Server = tcp:cs455finaldb.database.windows.net, 1433; Initial Catalog = studentevalsdb; Persist Security Info = False; User ID = { your_username }; Password ={ your_password}; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

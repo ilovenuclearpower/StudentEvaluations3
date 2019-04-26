@@ -17,7 +17,7 @@ namespace Student_Evaluation_3.Controllers
         {
             db = SchoolContext;
         }
-        public IActionResult Index()
+        public IActionResult Evaluation()
         {
             return View();
         }
@@ -25,7 +25,7 @@ namespace Student_Evaluation_3.Controllers
         [HttpGet]
         public IActionResult Form()
         {
-            return View()
+            return View();
         }
 
         [HttpPost]

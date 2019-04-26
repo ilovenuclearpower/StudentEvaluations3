@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "Course Evaluation";
 }
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
@@ -19,18 +19,34 @@
 
     What grade did you get in this course?<br>
     <select name="grade_">
-        <OPTION VALUE=></OPTION>
-        <OPTION VALUE=A>A
+        <OPTION VALUE="">
+            ""
         </OPTION>
-        <OPTION VALUE=B>B
+        <OPTION VALUE=A>
+            A
         </OPTION>
-        <OPTION VALUE=C>C
+        <OPTION VALUE=B>
+            B
         </OPTION>
-        <OPTION VALUE=D>D
+        <OPTION VALUE=C>
+            C
         </OPTION>
-        <OPTION VALUE=F>F
+        <OPTION VALUE=D>
+            D
+        </OPTION>
+        <OPTION VALUE=F>
+            F
         </OPTION>
     </select><br><br>
+
+    @foreach (var property in ViewData.ModelMetadata.Properties)
+    {
+        <div class="editor-line">
+            <label>@(property.DisplayName ?? property.PropertyName)</label>
+            @Html.Editor(property.PropertyName)
+        </div>
+    }
+
 
 
 

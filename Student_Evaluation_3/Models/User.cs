@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using BCrypt.Net;
-using Student_Evaluation_3.Security.Hashing;
+using Student_Evaluation_3.Security;
 
 namespace Student_Evaluation_3.Models
 {
@@ -22,7 +22,7 @@ namespace Student_Evaluation_3.Models
 
         private void SetPassword(string value)
         {
-            password = Security.Hashing.HashPassword(value);
+            password = Hashing.HashPassword(value);
         }
 
         public string UserName { get; set; }

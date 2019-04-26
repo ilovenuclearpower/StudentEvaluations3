@@ -15,7 +15,7 @@ namespace Student_Evaluation_3.Security
 
         public static string HashPassword(string password)
         {
-            return BCrypt.Net.BCrypt.HashPassword(password)
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
 
         public static bool VerifyPassword(string password, string input)

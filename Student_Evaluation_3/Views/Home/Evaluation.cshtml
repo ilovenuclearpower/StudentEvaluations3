@@ -1,0 +1,163 @@
+﻿@model Student_Evaluation_3.Models.Evaluation
+
+@{
+    ViewData["Title"] = "Evaluation";
+}
+
+<h2>Evaluation</h2>
+
+<h4>Evaluation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Evaluation">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="id" class="control-label"></label>
+                <input asp-for="id" class="form-control" />
+                <span asp-validation-for="id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="why_course" class="control-label"></label>
+                <input asp-for="why_course" class="form-control" />
+                <span asp-validation-for="why_course" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="hours_week" class="control-label"></label>
+                <input asp-for="hours_week" class="form-control" />
+                <span asp-validation-for="hours_week" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="life_connection" class="control-label"></label>
+                <input asp-for="life_connection" class="form-control" />
+                <span asp-validation-for="life_connection" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="grade" class="control-label"></label>
+                <input asp-for="grade" class="form-control" />
+                <span asp-validation-for="grade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="clear_goals" class="control-label"></label>
+                <input asp-for="clear_goals" class="form-control" />
+                <span asp-validation-for="clear_goals" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="helpful_assignments" class="control-label"></label>
+                <input asp-for="helpful_assignments" class="form-control" />
+                <span asp-validation-for="helpful_assignments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="reading_helpful" class="control-label"></label>
+                <input asp-for="reading_helpful" class="form-control" />
+                <span asp-validation-for="reading_helpful" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="relevant_materials" class="control-label"></label>
+                <input asp-for="relevant_materials" class="form-control" />
+                <span asp-validation-for="relevant_materials" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="challenged_learn" class="control-label"></label>
+                <input asp-for="challenged_learn" class="form-control" />
+                <span asp-validation-for="challenged_learn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="clear_syllabus" class="control-label"></label>
+                <input asp-for="clear_syllabus" class="form-control" />
+                <span asp-validation-for="clear_syllabus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="instructor_prepared" class="control-label"></label>
+                <input asp-for="instructor_prepared" class="form-control" />
+                <span asp-validation-for="instructor_prepared" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="instructor_knowledgeable" class="control-label"></label>
+                <input asp-for="instructor_knowledgeable" class="form-control" />
+                <span asp-validation-for="instructor_knowledgeable" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="effective_teaching" class="control-label"></label>
+                <input asp-for="effective_teaching" class="form-control" />
+                <span asp-validation-for="effective_teaching" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="timely_manner" class="control-label"></label>
+                <input asp-for="timely_manner" class="form-control" />
+                <span asp-validation-for="timely_manner" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="suggested_improvement" class="control-label"></label>
+                <input asp-for="suggested_improvement" class="form-control" />
+                <span asp-validation-for="suggested_improvement" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="grading_fair" class="control-label"></label>
+                <input asp-for="grading_fair" class="form-control" />
+                <span asp-validation-for="grading_fair" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="enthusiastic_teaching" class="control-label"></label>
+                <input asp-for="enthusiastic_teaching" class="form-control" />
+                <span asp-validation-for="enthusiastic_teaching" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="concern_understanding" class="control-label"></label>
+                <input asp-for="concern_understanding" class="form-control" />
+                <span asp-validation-for="concern_understanding" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="instructor_interaction" class="control-label"></label>
+                <input asp-for="instructor_interaction" class="form-control" />
+                <span asp-validation-for="instructor_interaction" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="different_views" class="control-label"></label>
+                <input asp-for="different_views" class="form-control" />
+                <span asp-validation-for="different_views" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="student_improved" class="control-label"></label>
+                <input asp-for="student_improved" class="form-control" />
+                <span asp-validation-for="student_improved" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="successful_in" class="control-label"></label>
+                <input asp-for="successful_in" class="form-control" />
+                <span asp-validation-for="successful_in" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="good_because" class="control-label"></label>
+                <input asp-for="good_because" class="form-control" />
+                <span asp-validation-for="good_because" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="improved_by" class="control-label"></label>
+                <input asp-for="improved_by" class="form-control" />
+                <span asp-validation-for="improved_by" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="good_job" class="control-label"></label>
+                <input asp-for="good_job" class="form-control" />
+                <span asp-validation-for="good_job" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="teaching_improved" class="control-label"></label>
+                <input asp-for="teaching_improved" class="form-control" />
+                <span asp-validation-for="teaching_improved" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
