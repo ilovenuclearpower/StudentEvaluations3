@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
-using BCrypt.Net;
-using Student_Evaluation_3.Security.Hashing;
-
-namespace Student_Evaluation_3.Models
+﻿namespace Student_Evaluation_3.Models
 {
     public enum Role
     {
@@ -16,7 +8,6 @@ namespace Student_Evaluation_3.Models
     {
 
         public int id { get; set; }
-        public Role Role { get; set; }
 
         private string password;
 
@@ -25,9 +16,4 @@ namespace Student_Evaluation_3.Models
             password = Security.Hashing.HashPassword(value);
         }
 
-        public string UserName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Department { get; set; }
-        public List<Course> Courses { get; set; }
-    }
 }
