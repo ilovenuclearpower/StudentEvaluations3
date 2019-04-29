@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Student_Evaluation_3.Models;
+using System.Data;
 
 namespace Student_Evaluation_3.Data
 {
     public class SchoolContext : DbContext
     {
+        
         public SchoolContext(DbContextOptions<SchoolContext> options)
             : base(options)
         {
@@ -19,7 +21,7 @@ namespace Student_Evaluation_3.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
-        public DbSet<Student>
+        public DbSet<Student> Students { get; set; }
 
         //Tablesets for migrations.
     }

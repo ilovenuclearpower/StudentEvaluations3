@@ -22,6 +22,11 @@ namespace Student_Evaluation_3.Controllers
             return View();
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult Form()
         {

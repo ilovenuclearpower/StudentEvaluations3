@@ -7,11 +7,11 @@ namespace Student_Evaluation_3.Models
 {
     public class Instructor
     {
-        public string EmployeeID { get; set; }
+        public User User { get; set; }
+        public string InstructorID { get; set; }
         public string PhoneNumber { get; set; }
         public string Department { get; set; }
         private int Salary { get; set; }
-        public List<Course> Courses { get; set; }
+        public ICollection<Enrollment> Enrollments { get; set; }
     }
-}
 }

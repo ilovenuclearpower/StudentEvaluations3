@@ -1,0 +1,19 @@
+﻿@model Student_Evaluation_3.Models.User
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true, "Login failed. Check your Login Details")
+    <div>
+        <fieldset>
+            <legend>Login</legend>
+            @Html.EditorForModel();
+            <input type="submit" value="Log in" />
+        </fieldset>
+    </div>
+}
+<h2>Login</h2>
+
