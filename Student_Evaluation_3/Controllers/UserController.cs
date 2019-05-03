@@ -36,6 +36,7 @@ namespace Student_Evaluation_3.Controllers
             System.Diagnostics.Debug.WriteLine(user.UserName);
             if (Hashing.VerifyPassword(user.Password, candidateuser.Password))
             {
+                System.Diagnostics.Debug.WriteLine("Success!");
                 //Code for loading user into HttpContext here
                 return View();
             }
