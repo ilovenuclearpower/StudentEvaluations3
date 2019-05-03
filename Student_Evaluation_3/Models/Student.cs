@@ -13,6 +13,5 @@ namespace Student_Evaluation_3.Models
         public string PhoneNumber { get; set; }
         public Department Department { get; set; }
 
-        public ICollection<Enrollment> Enrollments { get; set; }
     }
 }

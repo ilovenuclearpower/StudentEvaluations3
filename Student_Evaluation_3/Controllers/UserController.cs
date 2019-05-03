@@ -31,22 +31,17 @@ namespace Student_Evaluation_3.Controllers
         [HttpPost]
         public IActionResult Login(Models.User user)
         {
-            User result = new User();
-            try
-            {
-                result = (User)_context.Users.Where(u => u.UserName == user.UserName);
-            }
-            catch
-            {
-                return View("Error", new ErrorViewModel());
-            }
-            if (Hashing.VerifyPassword(user.Password, result.Password))
+            var candidateuser = _context.Users.Where(u => u.UserName == user.UserName).FirstOrDefault<User>();
+
+            System.Diagnostics.Debug.WriteLine(user.UserName);
+            if (Hashing.VerifyPassword(user.Password, candidateuser.Password))
             {
                 //Code for loading user into HttpContext here
                 return View();
             }
             else
             {
+                System.Diagnostics.Debug.WriteLine("User/password combination doesn't match");
                 return View("Error", new ErrorViewModel());
             }
 
