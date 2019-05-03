@@ -69,7 +69,7 @@ namespace Student_Evaluation_3.Controllers
                 HttpContext.User = newuser;
 
                 //Code for loading user into HttpContext here
-                return RedirectToAction("")
+                return RedirectToAction("Evaluation/Index");
             }
             else
             {

@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using System.Data.Data
+using System.ComponentModel.DataAnnotations;
 namespace Student_Evaluation_3.Models
 {
     public enum Role
