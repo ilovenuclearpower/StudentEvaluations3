@@ -26,13 +26,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Student_Evaluation_3</a>
+                <!--Isaac Changed-->
+                <!--<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Student Evaluation Portal</a>-->
+                <a asp-area="" asp-controller="User" asp-action="Login" class="navbar-brand">Student Evaluation Portal</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <!--Isaac Changed-->
+                    <!--<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>-->
+                    <li><a asp-area="" asp-controller="Evaluation" asp-action="Index">Evaluation</a></li>
+                    <!--<li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>-->
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">Evaluation Form</a></li>
+                    <!--<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>-->
                 </ul>
             </div>
         </div>
@@ -44,7 +49,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2019 - Student_Evaluation_3</p>
+            <p>&copy; 2019 - Student Evaluation Portal</p>
         </footer>
     </div>
 
