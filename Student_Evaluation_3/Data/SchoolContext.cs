@@ -22,6 +22,7 @@ namespace Student_Evaluation_3.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Stakeholder> Stakeholders { get; set; }
 
         //Tablesets for migrations.
     }
