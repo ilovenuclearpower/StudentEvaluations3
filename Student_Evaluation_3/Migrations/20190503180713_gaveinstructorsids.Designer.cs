@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Student_Evaluation_3.Data;
 
 namespace Student_Evaluation_3.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20190503180713_gaveinstructorsids")]
+    partial class gaveinstructorsids
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,13 +63,13 @@ namespace Student_Evaluation_3.Migrations
 
                     b.Property<int>("CourseID");
 
-                    b.Property<int?>("InstructorUserID");
+                    b.Property<string>("InstructorID");
 
                     b.Property<int>("StudentID");
 
                     b.HasKey("EnrollmentID");
 
-                    b.HasIndex("InstructorUserID");
+                    b.HasIndex("InstructorID");
 
                     b.ToTable("Enrollment");
                 });
@@ -143,6 +145,36 @@ namespace Student_Evaluation_3.Migrations
                     b.ToTable("Evaluations");
                 });
 
+            modelBuilder.Entity("Student_Evaluation_3.Models.Instructor", b =>
+                {
+                    b.Property<string>("InstructorID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CourseID");
+
+                    b.Property<string>("Department");
+
+                    b.Property<int?>("DepartmentID");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<int?>("StakeholderID");
+
+                    b.Property<int>("UserID");
+
+                    b.HasKey("InstructorID");
+
+                    b.HasIndex("CourseID");
+
+                    b.HasIndex("DepartmentID");
+
+                    b.HasIndex("StakeholderID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Instructors");
+                });
+
             modelBuilder.Entity("Student_Evaluation_3.Models.Stakeholder", b =>
                 {
                     b.Property<int>("StakeholderID")
@@ -178,58 +210,23 @@ namespace Student_Evaluation_3.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
                 });
 
-            modelBuilder.Entity("Student_Evaluation_3.Models.Instructor", b =>
+            modelBuilder.Entity("Student_Evaluation_3.Models.Student", b =>
                 {
                     b.HasBaseType("Student_Evaluation_3.Models.User");
 
                     b.Property<int?>("CourseID");
 
-                    b.Property<string>("Department");
-
                     b.Property<int?>("DepartmentID");
-
-                    b.Property<string>("InstructorID");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<int?>("StakeholderID");
-
-                    b.Property<int?>("UserID1");
-
-                    b.HasIndex("CourseID");
-
-                    b.HasIndex("DepartmentID");
-
-                    b.HasIndex("StakeholderID");
-
-                    b.HasIndex("UserID1");
-
-                    b.ToTable("Instructor");
-
-                    b.HasDiscriminator().HasValue("Instructor");
-                });
-
-            modelBuilder.Entity("Student_Evaluation_3.Models.Student", b =>
-                {
-                    b.HasBaseType("Student_Evaluation_3.Models.User");
-
-                    b.Property<int?>("CourseID")
-                        .HasColumnName("Student_CourseID");
-
-                    b.Property<int?>("DepartmentID")
-                        .HasColumnName("Student_DepartmentID");
 
                     b.Property<int?>("EnrollmentID");
 
                     b.Property<DateTime>("GraduationYear");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnName("Student_PhoneNumber");
+                    b.Property<string>("PhoneNumber");
 
                     b.Property<int>("StudentID");
 
-                    b.Property<int?>("UserID1")
-                        .HasColumnName("Student_UserID1");
+                    b.Property<int?>("UserID1");
 
                     b.HasIndex("CourseID");
 
@@ -259,7 +256,7 @@ namespace Student_Evaluation_3.Migrations
                 {
                     b.HasOne("Student_Evaluation_3.Models.Instructor")
                         .WithMany("Enrollments")
-                        .HasForeignKey("InstructorUserID");
+                        .HasForeignKey("InstructorID");
                 });
 
             modelBuilder.Entity("Student_Evaluation_3.Models.Evaluation", b =>
@@ -289,7 +286,8 @@ namespace Student_Evaluation_3.Migrations
 
                     b.HasOne("Student_Evaluation_3.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID1");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Student_Evaluation_3.Models.Student", b =>

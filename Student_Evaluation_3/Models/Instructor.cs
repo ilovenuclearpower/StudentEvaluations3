@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Student_Evaluation_3.Models
 {
-    public class Instructor
+    public class Instructor : User
     {
         public User User { get; set; }
         public string InstructorID { get; set; }

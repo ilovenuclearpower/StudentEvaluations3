@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using System.Data.Data
 namespace Student_Evaluation_3.Models
 {
     public enum Role
@@ -10,6 +11,7 @@ namespace Student_Evaluation_3.Models
         [System.ComponentModel.DataAnnotations.ScaffoldColumn(false)]
         public int UserID { get; set; }
         public string UserName { get; set; }
+        [DataType(DataType.Password)]
         public string Password { get => password; set => password = value; }
 
         private string password;
