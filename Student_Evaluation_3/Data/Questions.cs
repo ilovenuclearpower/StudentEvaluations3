@@ -7,7 +7,7 @@ namespace Student_Evaluation_3.Data
 {
     public class Questions
     {
-        string[,] surveyQuestions = new string[,]
+        public Dictionary<string, string> surveyQuestions = new Dictionary<string, string>
         {
             {"Why did you take this course?", "why_course"},
         
