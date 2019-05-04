@@ -1,0 +1,171 @@
+﻿@model Student_Evaluation_3.Models.Evaluation
+@using Student_Evaluation_3.Data
+@{
+    ViewData["Title"] = "Form";
+}
+
+<h2>Evaluation Form</h2>
+
+<!--<h4>Evaluation Form</h4>-->
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id" />
+            <div class="form-group">
+                <label asp-for="why_course" class="control-label">Why did you take this course?</label>
+                <input asp-for="why_course" class="form-control" />
+                <span asp-validation-for="why_course" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="hours_week" class="control-label">How many hours per week were spent studying outside of class?</label>
+                <input asp-for="hours_week" class="form-control" />
+                <span asp-validation-for="hours_week" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="life_connection" class="control-label">How does this course connect with your life?</label>
+                <input asp-for="life_connection" class="form-control" />
+                <span asp-validation-for="life_connection" class="text-danger"></span>
+            </div>
+            <!--<div class="form-group">
+                <label asp-for="grade" class="control-label"></label>
+                <input asp-for="grade" class="form-control" />
+                <span asp-validation-for="grade" class="text-danger"></span>-->
+            <div class="form-group">
+                <label asp-for="grade" class="control-label">What grade did you get in this course?</label>
+                <select asp-for="grade" class="form-control" id="grade">
+                    <option></option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="F">F</option>
+                </select>
+              
+                <span asp-validation-for="grade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="clear_goals" class="control-label">Did the course have clearly stated goals?</label>
+                <input asp-for="clear_goals" class="form-control" />
+                <span asp-validation-for="clear_goals" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="helpful_assignments" class="control-label">Were assignments helpful to your learning process?</label>
+                <input asp-for="helpful_assignments" class="form-control" />
+                <span asp-validation-for="helpful_assignments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="reading_helpful" class="control-label">Was required reading helpful (if applicable)?</label>
+                <input asp-for="reading_helpful" class="form-control" />
+                <span asp-validation-for="reading_helpful" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="relevant_materials" class="control-label">Were instructional materials of high quality and relevant?</label>
+                <input asp-for="relevant_materials" class="form-control" />
+                <span asp-validation-for="relevant_materials" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="challenged_learn" class="control-label">Did the course challenge you to learn?</label>
+                <input asp-for="challenged_learn" class="form-control" />
+                <span asp-validation-for="challenged_learn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="clear_syllabus" class="control-label">Did the outline or syllabus clearly state the course’s content, grading criteria, and other expectations?</label>
+                <input asp-for="clear_syllabus" class="form-control" />
+                <span asp-validation-for="clear_syllabus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="instructor_prepared" class="control-label">Was the instructor prepared for class?</label>
+                <input asp-for="instructor_prepared" class="form-control" />
+                <span asp-validation-for="instructor_prepared" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="instructor_knowledgeable" class="control-label">Did the instructor demonstrate knowledge of the subject?</label>
+                <input asp-for="instructor_knowledgeable" class="form-control" />
+                <span asp-validation-for="instructor_knowledgeable" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="effective_teaching" class="control-label">Did the instructor use effective teaching strategies?</label>
+                <input asp-for="effective_teaching" class="form-control" />
+                <span asp-validation-for="effective_teaching" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="timely_manner" class="control-label">Did instructor returne assignments in a timely manner?</label>
+                <input asp-for="timely_manner" class="form-control" />
+                <span asp-validation-for="timely_manner" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="suggested_improvement" class="control-label">Did instructor provided suggestions for improvement?</label>
+                <input asp-for="suggested_improvement" class="form-control" />
+                <span asp-validation-for="suggested_improvement" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="grading_fair" class="control-label">Was grading fair and consistent with the outline or syllabus?</label>
+                <input asp-for="grading_fair" class="form-control" />
+                <span asp-validation-for="grading_fair" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="enthusiastic_teaching" class="control-label">Was the instructor enthusiastic about teaching the course?</label>
+                <input asp-for="enthusiastic_teaching" class="form-control" />
+                <span asp-validation-for="enthusiastic_teaching" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="concern_understanding" class="control-label">Did instructor show concern for the student’s understanding?</label>
+                <input asp-for="concern_understanding" class="form-control" />
+                <span asp-validation-for="concern_understanding" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="instructor_interaction" class="control-label">Was there opportunity for instructor/student interaction?</label>
+                <input asp-for="instructor_interaction" class="form-control" />
+                <span asp-validation-for="instructor_interaction" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="different_views" class="control-label">Did the instructor encourage different points of view when appropriate?</label>
+                <input asp-for="different_views" class="form-control" />
+                <span asp-validation-for="different_views" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="student_improved" class="control-label">I could have improved by doing...</label>
+                <input asp-for="student_improved" class="form-control" />
+                <span asp-validation-for="student_improved" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="successful_in" class="control-label">I was successful in...</label>
+                <input asp-for="successful_in" class="form-control" />
+                <span asp-validation-for="successful_in" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="good_because" class="control-label">The course was good because...</label>
+                <input asp-for="good_because" class="form-control" />
+                <span asp-validation-for="good_because" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="improved_by" class="control-label">The course could be improved by...</label>
+                <input asp-for="improved_by" class="form-control" />
+                <span asp-validation-for="improved_by" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="good_job" class="control-label">The instructor did a good job of...</label>
+                <input asp-for="good_job" class="form-control" />
+                <span asp-validation-for="good_job" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="teaching_improved" class="control-label">The instructor's teaching could be improved by...</label>
+                <input asp-for="teaching_improved" class="form-control" />
+                <span asp-validation-for="teaching_improved" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

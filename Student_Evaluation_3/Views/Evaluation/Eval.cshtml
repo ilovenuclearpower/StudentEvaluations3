@@ -1,0 +1,174 @@
+﻿@model Student_Evaluation_3.Models.Evaluation
+
+@{
+    ViewData["Title"] = "Eval";
+}
+
+<h2>Eval</h2>
+
+<div>
+    <h4>Evaluation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.why_course)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.why_course)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.hours_week)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.hours_week)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.life_connection)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.life_connection)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.grade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.grade)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.clear_goals)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.clear_goals)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.helpful_assignments)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.helpful_assignments)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.reading_helpful)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.reading_helpful)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.relevant_materials)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.relevant_materials)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.challenged_learn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.challenged_learn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.clear_syllabus)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.clear_syllabus)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.instructor_prepared)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.instructor_prepared)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.instructor_knowledgeable)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.instructor_knowledgeable)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.effective_teaching)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.effective_teaching)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.timely_manner)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.timely_manner)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.suggested_improvement)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.suggested_improvement)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.grading_fair)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.grading_fair)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.enthusiastic_teaching)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.enthusiastic_teaching)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.concern_understanding)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.concern_understanding)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.instructor_interaction)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.instructor_interaction)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.different_views)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.different_views)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.student_improved)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.student_improved)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.successful_in)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.successful_in)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.good_because)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.good_because)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.improved_by)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.improved_by)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.good_job)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.good_job)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.teaching_improved)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.teaching_improved)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

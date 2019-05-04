@@ -39,8 +39,12 @@ namespace Student_Evaluation_3.Controllers
             db.Evaluations.Add(input);
             db.SaveChanges();
             return View("/View/Success");
-        
-
         }
+
+        public IActionResult Main()
+        {
+            return View();
+        }
+
     }
 }

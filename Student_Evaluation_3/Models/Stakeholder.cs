@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace Student_Evaluation_3.Models
 {
-    public class Enrollment
+    public class Stakeholder
     {
-        public int EnrollmentID { get; set; }
+        public int StakeholderID { get; set; }
         public int CourseID { get; set; }
-        public int StudentID { get; set; }
+        public int InstructorID { get; set; }
 
         public ICollection<Course> Courses { get; set; }
-        public ICollection<Student> Students { get; set; }
+        public ICollection<Instructor> Instructors { get; set; }
     }
 }

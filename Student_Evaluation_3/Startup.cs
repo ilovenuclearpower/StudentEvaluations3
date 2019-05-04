@@ -63,9 +63,11 @@ namespace Student_Evaluation_3
 
             app.UseMvc(routes =>
             {
+                //if broken ask isaac
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    //template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=User}/{action=Login}/{id?}");
             });
         }
     }

@@ -31,22 +31,49 @@ namespace Student_Evaluation_3.Controllers
         [HttpPost]
         public IActionResult Login(Models.User user)
         {
-            User result = new User();
-            try
+            var candidateuser = _context.Users.Where(u => u.UserName == user.UserName).FirstOrDefault<User>();
+            System.Diagnostics.Debug.WriteLine(user.UserName);
+            if (Hashing.VerifyPassword(user.Password, candidateuser.Password))
             {
-                result = (User)_context.Users.Where(u => u.UserName == user.UserName);
-            }
-            catch
-            {
-                return View("Error", new ErrorViewModel());
-            }
-            if (Hashing.VerifyPassword(user.Password, result.Password))
-            {
+                
+                string role = "";
+                var candidatestudent = _context.Students.Where(u => u.UserID == candidateuser.UserID).FirstOrDefault<Student>();
+                var candidateinstructor = _context.Instructors.Where(u => u.UserID == candidateuser.UserID).FirstOrDefault<Instructor>();
+                if (candidatestudent != null)
+                {
+                    role = "Student";
+                }
+                else
+                {
+                    role = "Instructor";
+                }
+                System.Diagnostics.Debug.WriteLine("Success!");
+                var userClaims = new List<System.Security.Claims.Claim>()
+                {
+                    new System.Security.Claims.Claim("Role", role),
+                };
+                if (role == "Student")
+                {
+                    userClaims.Append(new System.Security.Claims.Claim("Name", candidatestudent.UserName));
+                    userClaims.Append(new System.Security.Claims.Claim("StudentID", candidatestudent.StudentID.ToString()));
+                    userClaims.Append(new System.Security.Claims.Claim("UserID", candidatestudent.UserID.ToString()));
+                }
+                else
+                {
+                    userClaims.Append(new System.Security.Claims.Claim("Name", candidateinstructor.UserName));
+                    userClaims.Append(new System.Security.Claims.Claim("InstructorID", candidateinstructor.InstructorID.ToString()));
+                    userClaims.Append(new System.Security.Claims.Claim("UserID", candidateinstructor.UserID.ToString()));
+
+                }
+                var newuser = new System.Security.Claims.ClaimsPrincipal(new System.Security.Claims.ClaimsIdentity(userClaims, "Custom"));
+                HttpContext.User = newuser;
+
                 //Code for loading user into HttpContext here
-                return View();
+                return RedirectToAction("Evaluation/Index");
             }
             else
             {
+                System.Diagnostics.Debug.WriteLine("User/password combination doesn't match");
                 return View("Error", new ErrorViewModel());
             }
 
