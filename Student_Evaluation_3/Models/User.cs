@@ -13,7 +13,7 @@ namespace Student_Evaluation_3.Models
         public string UserName { get; set; }
 
         [DataType(DataType.Password)]
-        public string Password { get => password; set => password = Security.Hashing.HashPassword(value); }
+        public string Password { get => password; set => password = value; }
 
         private string password;
 

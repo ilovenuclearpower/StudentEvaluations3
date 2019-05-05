@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Student_Evaluation_3.Data;
 using Student_Evaluation_3.Security;
 using Student_Evaluation_3.Models;
+using System.Security.Claims;
 
 namespace Student_Evaluation_3.Controllers
 {
@@ -67,13 +68,11 @@ namespace Student_Evaluation_3.Controllers
                 }
                 var newuser = new System.Security.Claims.ClaimsPrincipal(new System.Security.Claims.ClaimsIdentity(userClaims, "Custom"));
                 HttpContext.User = newuser;
-
                 //Code for loading user into HttpContext here
-                return RedirectToAction("Evaluation/Index");
+                return RedirectToAction("Index", "Evaluation");
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("User/password combination doesn't match");
                 return View("Error", new ErrorViewModel());
             }
 
