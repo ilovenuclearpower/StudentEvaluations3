@@ -46,7 +46,7 @@ namespace Student_Evaluation_3.Controllers
             return RedirectToAction("Main", "Evaluation");
         }
 
-        [UserLoginFilter]
+        //[UserLoginFilter]
         public IActionResult Main()
         {
             IEnumerable<Course> courses;

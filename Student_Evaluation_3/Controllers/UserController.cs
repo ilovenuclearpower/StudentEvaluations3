@@ -7,6 +7,7 @@ using Student_Evaluation_3.Data;
 using Student_Evaluation_3.Security;
 using Student_Evaluation_3.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Student_Evaluation_3.Controllers
 {
@@ -67,8 +68,9 @@ namespace Student_Evaluation_3.Controllers
 
                 }
                 var newuser = new System.Security.Claims.ClaimsPrincipal(new System.Security.Claims.ClaimsIdentity(userClaims, "Custom"));
-                HttpContext.User = newuser;
+                HttpContext.Authentication.SignInAsync("Cookie", newuser);
                 //Code for loading user into HttpContext here
+                System.Diagnostics.Debug.WriteLine("User login successful" + HttpContext.User.Identity.IsAuthenticated);
                 return RedirectToAction("Main", "Evaluation");
             }
             else
