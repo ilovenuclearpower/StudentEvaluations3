@@ -69,7 +69,7 @@ namespace Student_Evaluation_3.Controllers
                 var newuser = new System.Security.Claims.ClaimsPrincipal(new System.Security.Claims.ClaimsIdentity(userClaims, "Custom"));
                 HttpContext.User = newuser;
                 //Code for loading user into HttpContext here
-                return RedirectToAction("Index", "Evaluation");
+                return RedirectToAction("Main", "Evaluation");
             }
             else
             {

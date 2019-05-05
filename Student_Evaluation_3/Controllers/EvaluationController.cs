@@ -31,17 +31,19 @@ namespace Student_Evaluation_3.Controllers
         }
 
         [HttpGet]
-        public IActionResult Form()
+        public IActionResult Edit(int id)
         {
-            return View();
+            var editedCourse = db.Courses.Where(c => c.CourseID == id).FirstOrDefault();
+            return View(editedCourse);
         }
 
         [HttpPost]
-        public IActionResult Form(Evaluation input)
+        [StudentFilter]
+        public IActionResult Edit(Evaluation input)
         {
             db.Evaluations.Add(input);
             db.SaveChanges();
-            return View("/View/Success");
+            return RedirectToAction("Main", "Evaluation");
         }
 
         [UserLoginFilter]
@@ -50,11 +52,20 @@ namespace Student_Evaluation_3.Controllers
             IEnumerable<Course> courses;
             if (HttpContext.User.HasClaim("Role", "Student"))
             {
-                var StudentID = HttpContext.User.Claims.Where(c => c.Type == "StudentID").Select(t => t.Value).FirstOrDefault();
-                var CourseIDs = db.Enrollments.Where(c => c.StudentID.ToString() == StudentID).Select(t => t.CourseID);
+                string StudentID = HttpContext.User.Claims.Where(c => c.Type == "StudentID").Select(t => t.Value).FirstOrDefault();
+                IQueryable<int> CourseIDs = db.Enrollments.Where(c => c.StudentID.ToString() == StudentID).Select(t => t.CourseID);
+                List<Course> CoursesForStudent = db.Courses.Where(c => CourseIDs.Contains(c.CourseID)).ToList<Course>();
+                courses = CoursesForStudent;
 
             }
-            return View();
+            else
+            {
+                string InstructorID = HttpContext.User.Claims.Where(c => c.Type == "InstructorID").Select(t => t.Value).FirstOrDefault();
+                IQueryable<int> CourseIDs = db.Stakeholders.Where(c => c.InstructorID.ToString() == InstructorID).Select(t => t.CourseID);
+                List<Course> CoursesForInstructor = db.Courses.Where(c => CourseIDs.Contains(c.CourseID)).ToList<Course>();
+                courses = CoursesForInstructor;
+            }
+            return View(courses);
         }
 
     }

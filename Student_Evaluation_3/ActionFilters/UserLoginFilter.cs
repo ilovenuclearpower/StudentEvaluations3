@@ -73,4 +73,21 @@ namespace Student_Evaluation_3.ActionFilters
             throw new NotImplementedException();
         }
     }
+    public class StudentFilter : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            if (context.HttpContext.User.HasClaim("Role", "Instructor"))
+            {
+                {
+                    context.Result = new RedirectToRouteResult(
+                        new RouteValueDictionary
+                        {
+                        { "controller", "Evaluation" },
+                        { "action", "Main" }
+                        });
+                }
+            }
+        }
+    }
 }
