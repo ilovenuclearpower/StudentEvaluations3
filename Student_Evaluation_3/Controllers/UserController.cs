@@ -8,6 +8,7 @@ using Student_Evaluation_3.Security;
 using Student_Evaluation_3.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Student_Evaluation_3.Controllers
 {
@@ -34,7 +35,6 @@ namespace Student_Evaluation_3.Controllers
         public IActionResult Login(Models.User user)
         {
             var candidateuser = _context.Users.Where(u => u.UserName == user.UserName).FirstOrDefault<User>();
-            System.Diagnostics.Debug.WriteLine(user.UserName);
             if (Hashing.VerifyPassword(user.Password, candidateuser.Password))
             {
                 
@@ -50,29 +50,31 @@ namespace Student_Evaluation_3.Controllers
                     role = "Instructor";
                 }
                 System.Diagnostics.Debug.WriteLine("Success!");
-                var userClaims = new List<System.Security.Claims.Claim>()
-                {
-                    new System.Security.Claims.Claim("Role", role),
-                };
+                List<Claim> userClaims;
                 if (role == "Student")
                 {
-                    userClaims.Append(new System.Security.Claims.Claim("Name", candidatestudent.UserName));
-                    userClaims.Append(new System.Security.Claims.Claim("StudentID", candidatestudent.StudentID.ToString()));
-                    userClaims.Append(new System.Security.Claims.Claim("UserID", candidatestudent.UserID.ToString()));
+                    userClaims = new List<System.Security.Claims.Claim>()
+                {
+                    new System.Security.Claims.Claim(ClaimTypes.Role, role),
+                    new System.Security.Claims.Claim(ClaimTypes.Role, "User"),
+                    new System.Security.Claims.Claim("StudentID", candidatestudent.StudentID.ToString()),
+                    new Claim("UserID", candidatestudent.UserID.ToString())
+                };
                 }
                 else
                 {
-                    userClaims.Append(new System.Security.Claims.Claim("Name", candidateinstructor.UserName));
-                    userClaims.Append(new System.Security.Claims.Claim("InstructorID", candidateinstructor.InstructorID.ToString()));
-                    userClaims.Append(new System.Security.Claims.Claim("UserID", candidateinstructor.UserID.ToString()));
-
+                    userClaims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Role, role),
+                        new Claim(ClaimTypes.Role, "User"),
+                        new Claim("InstructorID", candidateinstructor.InstructorID.ToString()),
+                        new Claim("UserID", candidateinstructor.UserID.ToString())
+                    };
                 }
-                var newuser = new System.Security.Claims.ClaimsPrincipal(new System.Security.Claims.ClaimsIdentity(userClaims, "Custom"));
-                HttpContext.Authentication.SignInAsync("Cookie", newuser);
-                //Code for loading user into HttpContext here
-                System.Diagnostics.Debug.WriteLine("User login successful" + HttpContext.User.Identity.IsAuthenticated);
-                return RedirectToAction("Main", "Evaluation");
-            }
+
+                var newuser = new System.Security.Claims.ClaimsPrincipal(new System.Security.Claims.ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme));
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, newuser);
+                return RedirectToAction("Main", "Evaluation");            }
             else
             {
                 return View("Error", new ErrorViewModel());
