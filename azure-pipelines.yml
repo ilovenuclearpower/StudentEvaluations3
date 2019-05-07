@@ -13,12 +13,13 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
+- script: dotnet build --configuration $(buildConfiguration) --o $(System.DefaultStagingDirectory)
   displayName: 'dotnet build $(buildConfiguration)'
+
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: $(System.DefaultWorkingDirectory)
 
 
 
