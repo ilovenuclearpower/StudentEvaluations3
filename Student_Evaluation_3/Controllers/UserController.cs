@@ -71,7 +71,6 @@ namespace Student_Evaluation_3.Controllers
                         new Claim("UserID", candidateinstructor.UserID.ToString())
                     };
                 }
-
                 var newuser = new System.Security.Claims.ClaimsPrincipal(new System.Security.Claims.ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme));
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, newuser);
                 return RedirectToAction("Main", "Evaluation");            }
