@@ -8,10 +8,12 @@ namespace Student_Evaluation_3.Models
     [Serializable]
     public class Evaluation
     {
-        public int id { get; set; }
-        public User instructor { get; set; }
+        public int EvaluationID { get; set; }
+        public IEnumerable<Instructor> Instructors { get; set; }
         public Course Course { get; set; }
+        public int CourseID { get; set; }
         public Student Student { get; set; }
+        public int StudentID { get; set; }
         public String why_course { get; set; }
         public String hours_week { get; set; }
         public String life_connection { get; set; }

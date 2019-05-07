@@ -53,24 +53,34 @@ namespace Student_Evaluation_3.ActionFilters
                 
                 if (context.HttpContext.User.HasClaim("Role", "Student"))
                 {
-                    var claimType = "StudentID";
-                    var claim = context.HttpContext.User.FindFirst(claimType);
-                    var studentid = claim == null ? string.Empty : claim.Value;
+                    string claimType = "StudentID";
+                    Claim claim = context.HttpContext.User.FindFirst(claimType);
+                    string studentid = claim == null ? string.Empty : claim.Value;
 
                 }
+
         }
     }
 
-    public class InstructorFilter : IActionFilter
+    public class InstructorFilter : ActionFilterAttribute
     {
-        public void OnActionExecuted(ActionExecutedContext context)
+        public override void OnActionExecuted(ActionExecutedContext context)
         {
             throw new NotImplementedException();
         }
 
-        public void OnActionExecuting(ActionExecutingContext context)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
-            throw new NotImplementedException();
+            if (context.HttpContext.User.IsInRole("Student"))
+            {
+                context.Result = new RedirectToRouteResult(
+                    new RouteValueDictionary
+                    {
+                        {"controller", "Evaluation" },
+                        { "action", "Main" }
+
+                    });
+            }
         }
     }
     public class StudentFilter : ActionFilterAttribute

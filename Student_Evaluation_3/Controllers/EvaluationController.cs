@@ -23,21 +23,48 @@ namespace Student_Evaluation_3.Controllers
             db = SchoolContext;
         }
 
-        [TypeFilter(typeof(EditFilter))]
-        public IActionResult Eval()
+        [Student_Evaluation_3.ActionFilters.InstructorFilter]
+        public IActionResult EvalList(int id)
         {
-            return View();
+            List<Evaluation> evals;
+            if (HttpContext.User.IsInRole("Student"))
+            {
+                return Eval(id);
+            }
+            else
+            {
+                Stakeholder stakeholder = db.Stakeholders.Where(e => e.CourseID == id && e.InstructorID == int.Parse(HttpContext.User.Claims.Where(u => u.Type == "InstructorID").Select(u => u.Value).FirstOrDefault())).FirstOrDefault();
+                Instructor instructor = db.Instructors.Where(i => i.InstructorID == stakeholder.InstructorID.ToString()).FirstOrDefault();
+                evals = db.Evaluations.Where(e => e.CourseID == id && e.Instructors.Contains(instructor)).ToList();
+            }
+            return View(evals);
         }
 
-        public IActionResult Index()
+        public IActionResult Eval(int id)
         {
-            return View();
+            if (HttpContext.User.IsInRole("Instructor"))
+            {
+                return EvalList(id);
+            }
+            else
+            {
+
+                Evaluation eval = db.Evaluations.Where(e => (e.StudentID == int.Parse(HttpContext.User.Claims.Where(u => u.Type == "StudentID").Select(u => u.Value).FirstOrDefault())) && e.CourseID == id).FirstOrDefault();
+                if (string.IsNullOrEmpty(eval.why_course))
+                {
+                    return Edit(id);
+                }
+                return View(eval);
+            }
         }
+
+
 
         [HttpGet]
+        [StudentFilter]
         public IActionResult Edit(int id)
         {
-            var editedCourse = db.Courses.Where(c => c.CourseID == id).FirstOrDefault();
+            Evaluation editedCourse = db.Evaluations.Where(e => (e.StudentID == int.Parse(HttpContext.User.Claims.Where(u => u.Type == "StudentID").Select(u => u.Value).FirstOrDefault())) && e.CourseID == id).FirstOrDefault();
             return View(editedCourse);
         }
 
