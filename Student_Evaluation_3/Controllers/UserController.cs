@@ -34,7 +34,7 @@ namespace Student_Evaluation_3.Controllers
         [HttpPost]
         public IActionResult Login(Models.User user)
         {
-            var candidateuser = _context.Users.Where(u => u.UserName == user.UserName).FirstOrDefault<User>();
+            var candidateuser = _context.Users.Where(u => u.UserName == user.UserName).FirstOrDefault();
             if (Hashing.VerifyPassword(user.Password, candidateuser.Password))
             {
                 
