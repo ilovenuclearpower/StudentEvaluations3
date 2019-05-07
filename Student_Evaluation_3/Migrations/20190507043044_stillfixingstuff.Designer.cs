@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Student_Evaluation_3.Data;
 
 namespace Student_Evaluation_3.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20190507043044_stillfixingstuff")]
+    partial class stillfixingstuff
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,7 +80,7 @@ namespace Student_Evaluation_3.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CourseID");
+                    b.Property<int>("CourseID");
 
                     b.Property<int>("StudentID");
 
@@ -270,7 +272,8 @@ namespace Student_Evaluation_3.Migrations
                 {
                     b.HasOne("Student_Evaluation_3.Models.Course", "Course")
                         .WithMany("Evals")
-                        .HasForeignKey("CourseID");
+                        .HasForeignKey("CourseID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Student_Evaluation_3.Models.Student", "Student")
                         .WithMany()
