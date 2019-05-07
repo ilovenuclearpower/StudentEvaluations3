@@ -22,49 +22,45 @@ namespace Student_Evaluation_3.Controllers
         {
             db = SchoolContext;
         }
-
-        [Student_Evaluation_3.ActionFilters.InstructorFilter]
+        
+        [Authorize(Roles = "User")]
         public IActionResult EvalList(int id)
         {
             List<Evaluation> evals;
             if (HttpContext.User.IsInRole("Student"))
             {
-                return Eval(id);
+                return Eval(FindEvalForStudent(id).EvaluationID);
             }
             else
             {
-                Stakeholder stakeholder = db.Stakeholders.Where(e => e.CourseID == id && e.InstructorID == int.Parse(HttpContext.User.Claims.Where(u => u.Type == "InstructorID").Select(u => u.Value).FirstOrDefault())).FirstOrDefault();
-                Instructor instructor = db.Instructors.Where(i => i.InstructorID == stakeholder.InstructorID.ToString()).FirstOrDefault();
-                evals = db.Evaluations.Where(e => e.CourseID == id && e.Instructors.Contains(instructor)).ToList();
+                Stakeholder stakeholder = FindStakeHolderForCourse(id);
+                evals = FindStakeholderEvals(id, stakeholder).ToList();
             }
             return View(evals);
         }
 
+        [Authorize(Roles = "User")]
         public IActionResult Eval(int id)
         {
-            if (HttpContext.User.IsInRole("Instructor"))
+            Evaluation eval = FindEvalByID(id);
+            if (HttpContext.User.IsInRole("Student") && string.IsNullOrEmpty(eval.why_course))
             {
-                return EvalList(id);
+                return Edit(id);
             }
-            else
-            {
-
-                Evaluation eval = db.Evaluations.Where(e => (e.StudentID == int.Parse(HttpContext.User.Claims.Where(u => u.Type == "StudentID").Select(u => u.Value).FirstOrDefault())) && e.CourseID == id).FirstOrDefault();
-                if (string.IsNullOrEmpty(eval.why_course))
-                {
-                    return Edit(id);
-                }
-                return View(eval);
-            }
+            return View(FindEvalByID(id));
         }
 
 
 
         [HttpGet]
-        [StudentFilter]
+        [Authorize(Roles = "User")]
         public IActionResult Edit(int id)
         {
-            Evaluation editedCourse = db.Evaluations.Where(e => (e.StudentID == int.Parse(HttpContext.User.Claims.Where(u => u.Type == "StudentID").Select(u => u.Value).FirstOrDefault())) && e.CourseID == id).FirstOrDefault();
+            if (HttpContext.User.IsInRole("Instructor"))
+            {
+                return EvalList(id);
+            }
+            Evaluation editedCourse = FindEvalForStudent(id);
             return View(editedCourse);
         }
 
@@ -79,28 +75,79 @@ namespace Student_Evaluation_3.Controllers
         [Authorize(Roles = "User")]
         public IActionResult Main()
         {
-            IEnumerable<Course> courses;
-            if (HttpContext.User.IsInRole("Student"))
-            {
-                var principal = HttpContext.User;
-                ClaimsIdentity identity = principal.Identities.FirstOrDefault();
-                Claim claim = identity.FindFirst(CustomClaimTypes.StudentID);
-                int StudentID = int.Parse(claim.Value);
-                System.Diagnostics.Debug.WriteLine(StudentID);
-                IQueryable<int> CourseIDs = db.Enrollments.Where(c => c.StudentID == StudentID).Select(t => t.CourseID);
-                List<Course> CoursesForStudent = db.Courses.Where(c => CourseIDs.Contains(c.CourseID)).ToList<Course>();
-                courses = CoursesForStudent;
-
-            }
-            else
-            {
-                string InstructorID = HttpContext.User.Claims.Where(c => c.Type == "InstructorID").Select(t => t.Value).FirstOrDefault();
-                IQueryable<int> CourseIDs = db.Stakeholders.Where(c => c.InstructorID.ToString() == InstructorID).Select(t => t.CourseID);
-                List<Course> CoursesForInstructor = db.Courses.Where(c => CourseIDs.Contains(c.CourseID)).ToList<Course>();
-                courses = CoursesForInstructor;
-            }
+            List<Course> courses = FindCourses();
             return View(courses);
         }
 
-    }
+        [NonAction]
+        public Enrollment FindEnrollmentForCourse(int id)
+        {
+            return db.Enrollments.Where(en => en.CourseID == id && en.StudentID == ParseUserID()).FirstOrDefault();
+        }
+
+        [NonAction]
+        public Stakeholder FindStakeHolderForCourse(int id)
+        {
+            return db.Stakeholders.Where(e => e.CourseID == id && e.InstructorID == ParseUserID()).FirstOrDefault();
+        }
+
+        [NonAction]
+        public IEnumerable<Evaluation> FindStakeholderEvals(int id, Stakeholder stakeholder)
+        {
+            return db.Evaluations.Where(e => e.StakeHolderID == stakeholder.StakeholderID).ToList();
+        }
+
+        [NonAction]
+        public Evaluation FindEvalForStudent(int id)
+        {
+            Enrollment enrollment = FindEnrollmentForCourse(id);
+
+            return db.Evaluations.Where(e => e.EnrollmentID == enrollment.EnrollmentID).FirstOrDefault();
+        }
+
+        [NonAction]
+        public List<Course> FindCourses()
+        {
+            if (HttpContext.User.IsInRole("Student"))
+            {
+                List<Enrollment> enrollments = db.Enrollments.Where(e => e.StudentID == ParseUserID()).ToList();
+                List<Course> courses = new List<Course>();
+                foreach (Enrollment enrollment in enrollments)
+                {
+                    courses.Append(db.Courses.Where(c => c.CourseID == enrollment.EnrollmentID).FirstOrDefault());
+                }
+                return courses;
+            }
+            else
+            {
+                List<Stakeholder> stakeholders = db.Stakeholders.Where(e => e.InstructorID == ParseUserID()).ToList();
+                List<Course> courses = new List<Course>();
+                foreach (Stakeholder stakeholder in stakeholders)
+                {
+                    courses.Append(db.Courses.Where(c => c.CourseID == stakeholder.StakeholderID).FirstOrDefault());
+                }
+                return courses;
+            }
+
+        }
+
+        [NonAction]
+        public int ParseUserID()
+        {
+            if (HttpContext.User.IsInRole("Student"))
+            {
+                return int.Parse(HttpContext.User.Claims.Where(e => e.Type == "StudentID").Select(e => e.Value).FirstOrDefault());
+            }
+            else
+            {
+                return int.Parse(HttpContext.User.Claims.Where(e => e.Type == "InstructorID").Select(e => e.Value).FirstOrDefault());
+
+            }
+        }
+
+        [NonAction]
+        public Evaluation FindEvalByID(int id)
+        {
+            return db.Evaluations.Where(ev => ev.EvaluationID == id).FirstOrDefault();
+        }
 }

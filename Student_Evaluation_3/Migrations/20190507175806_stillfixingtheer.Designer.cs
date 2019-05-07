@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Student_Evaluation_3.Data;
 
 namespace Student_Evaluation_3.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20190507175806_stillfixingtheer")]
+    partial class stillfixingtheer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,9 +63,13 @@ namespace Student_Evaluation_3.Migrations
 
                     b.Property<int>("CourseID");
 
+                    b.Property<int?>("InstructorUserID");
+
                     b.Property<int>("StudentID");
 
                     b.HasKey("EnrollmentID");
+
+                    b.HasIndex("InstructorUserID");
 
                     b.ToTable("Enrollments");
                 });
@@ -73,6 +79,8 @@ namespace Student_Evaluation_3.Migrations
                     b.Property<int>("EvaluationID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseID");
 
                     b.Property<int>("EnrollmentID");
 
@@ -132,6 +140,8 @@ namespace Student_Evaluation_3.Migrations
 
                     b.HasKey("EvaluationID");
 
+                    b.HasIndex("CourseID");
+
                     b.HasIndex("EnrollmentID");
 
                     b.HasIndex("StakeHolderID");
@@ -190,11 +200,15 @@ namespace Student_Evaluation_3.Migrations
 
                     b.Property<int?>("StakeholderID");
 
+                    b.Property<int?>("UserID1");
+
                     b.HasIndex("CourseID");
 
                     b.HasIndex("DepartmentID");
 
                     b.HasIndex("StakeholderID");
+
+                    b.HasIndex("UserID1");
 
                     b.ToTable("Instructor");
 
@@ -220,7 +234,8 @@ namespace Student_Evaluation_3.Migrations
 
                     b.Property<int>("StudentID");
 
-                    b.Property<int?>("UserID1");
+                    b.Property<int?>("UserID1")
+                        .HasColumnName("Student_UserID1");
 
                     b.HasIndex("CourseID");
 
@@ -246,8 +261,20 @@ namespace Student_Evaluation_3.Migrations
                         .HasForeignKey("StakeholderID");
                 });
 
+            modelBuilder.Entity("Student_Evaluation_3.Models.Enrollment", b =>
+                {
+                    b.HasOne("Student_Evaluation_3.Models.Instructor")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("InstructorUserID");
+                });
+
             modelBuilder.Entity("Student_Evaluation_3.Models.Evaluation", b =>
                 {
+                    b.HasOne("Student_Evaluation_3.Models.Course")
+                        .WithMany("Evals")
+                        .HasForeignKey("CourseID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Student_Evaluation_3.Models.Enrollment", "Enrollment")
                         .WithMany()
                         .HasForeignKey("EnrollmentID")
@@ -272,6 +299,10 @@ namespace Student_Evaluation_3.Migrations
                     b.HasOne("Student_Evaluation_3.Models.Stakeholder")
                         .WithMany("Instructors")
                         .HasForeignKey("StakeholderID");
+
+                    b.HasOne("Student_Evaluation_3.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID1");
                 });
 
             modelBuilder.Entity("Student_Evaluation_3.Models.Student", b =>
