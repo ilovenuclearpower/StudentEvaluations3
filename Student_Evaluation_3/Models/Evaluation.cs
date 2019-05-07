@@ -9,11 +9,10 @@ namespace Student_Evaluation_3.Models
     public class Evaluation
     {
         public int EvaluationID { get; set; }
-        public IEnumerable<Instructor> Instructors { get; set; }
-        public Course Course { get; set; }
-        public int? CourseID { get; set; }
-        public Student Student { get; set; }
-        public int StudentID { get; set; }
+        public int StakeHolderID { get; set; }
+        public Stakeholder Stakeholder { get; set; }
+        public int EnrollmentID { get; set; }
+        public Enrollment Enrollment { get; set; }
         public String why_course { get; set; }
         public String hours_week { get; set; }
         public String life_connection { get; set; }

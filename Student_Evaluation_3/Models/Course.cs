@@ -8,7 +8,7 @@ namespace Student_Evaluation_3.Models
         public string Title { get; set; }
         public ICollection<Student> Students { get; set; }
         public ICollection<Instructor> Instructors { get; set; }
-        public List<Evaluation> Evals { get; set; }
+
 
         
     }

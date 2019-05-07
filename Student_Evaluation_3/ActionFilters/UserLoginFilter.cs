@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using System.Security.Claims;
 using Student_Evaluation_3.Data;
+using Student_Evaluation_3.Controllers;
 
 namespace Student_Evaluation_3.ActionFilters
 {
@@ -77,8 +78,7 @@ namespace Student_Evaluation_3.ActionFilters
                     new RouteValueDictionary
                     {
                         {"controller", "Evaluation" },
-                        { "action", "Main" }
-
+                        { "action" , "Main" }
                     });
             }
         }
