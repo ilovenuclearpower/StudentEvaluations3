@@ -14,7 +14,7 @@ using Student_Evaluation_3.Security;
 
 namespace Student_Evaluation_3.Controllers
 {
-    
+
     public class EvaluationController : Controller
     {
         private SchoolContext db;
@@ -22,7 +22,7 @@ namespace Student_Evaluation_3.Controllers
         {
             db = SchoolContext;
         }
-        
+
         [Authorize(Roles = "User")]
         public IActionResult EvalList(int id)
         {
@@ -150,4 +150,5 @@ namespace Student_Evaluation_3.Controllers
         {
             return db.Evaluations.Where(ev => ev.EvaluationID == id).FirstOrDefault();
         }
+    }
 }

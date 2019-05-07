@@ -37,8 +37,10 @@ namespace Student_Evaluation_3
 
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                options.LoginPath = "/User/Login");
+                .AddCookie(options => {
+                    options.LoginPath = "/User/Login";
+                    options.Cookie.Expiration = new TimeSpan(24, 0, 0);
+                    });
 
 
             services.AddDbContext<SchoolContext>(options => options.UseSqlServer("Server=tcp:css455finaldb.database.windows.net,1433;Initial Catalog=studentevalsdb;Persist Security Info=False;User ID= connor;Password= Bl4mBl4m!!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
