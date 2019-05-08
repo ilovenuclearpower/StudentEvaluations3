@@ -87,7 +87,8 @@ namespace Student_Evaluation_3.Controllers
         [NonAction]
         public Stakeholder FindStakeHolderForCourse(int id)
         {
-            return db.Stakeholders.Where(e => e.CourseID == id && e.InstructorID == ParseUserID()).FirstOrDefault();
+            Stakeholder stakeholder = db.Stakeholders.Where(e => e.CourseID == id).FirstOrDefault();
+            return stakeholder;
         }
 
         [NonAction]
