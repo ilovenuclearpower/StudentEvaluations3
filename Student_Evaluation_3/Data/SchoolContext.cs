@@ -24,6 +24,8 @@ namespace Student_Evaluation_3.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Stakeholder> Stakeholders { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<FacultyGroup> FacultyGroups { get; set; }
+        public DbSet<GroupAssignment> GroupAssignments { get; set; }
 
         //Tablesets for migrations.
     }

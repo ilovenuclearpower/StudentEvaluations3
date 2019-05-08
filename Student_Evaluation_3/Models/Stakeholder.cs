@@ -9,9 +9,9 @@ namespace Student_Evaluation_3.Models
     {
         public int StakeholderID { get; set; }
         public int CourseID { get; set; }
-        public int InstructorID { get; set; }
+        public int FacultyGroupID { get; set; }
 
         public ICollection<Course> Courses { get; set; }
-        public ICollection<Instructor> Instructors { get; set; }
+        public ICollection<FacultyGroup> Instructors { get; set; }
     }
 }

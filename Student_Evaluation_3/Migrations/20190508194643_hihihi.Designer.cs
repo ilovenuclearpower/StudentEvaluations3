@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Student_Evaluation_3.Data;
 
 namespace Student_Evaluation_3.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20190508194643_hihihi")]
+    partial class hihihi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,34 +139,13 @@ namespace Student_Evaluation_3.Migrations
                     b.ToTable("Evaluations");
                 });
 
-            modelBuilder.Entity("Student_Evaluation_3.Models.FacultyGroup", b =>
-                {
-                    b.Property<int>("FacultyGroupID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("GroupAssignmentID");
-
-                    b.Property<string>("GroupName");
-
-                    b.Property<int?>("StakeholderID");
-
-                    b.HasKey("FacultyGroupID");
-
-                    b.HasIndex("GroupAssignmentID");
-
-                    b.HasIndex("StakeholderID");
-
-                    b.ToTable("FacultyGroups");
-                });
-
             modelBuilder.Entity("Student_Evaluation_3.Models.GroupAssignment", b =>
                 {
                     b.Property<int>("GroupAssignmentID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("FacultyGroupID");
+                    b.Property<int>("GroupID");
 
                     b.Property<int>("InstructorID");
 
@@ -183,7 +164,7 @@ namespace Student_Evaluation_3.Migrations
 
                     b.Property<int?>("EvaluationID");
 
-                    b.Property<int>("FacultyGroupID");
+                    b.Property<int>("GroupID");
 
                     b.HasKey("StakeholderID");
 
@@ -212,6 +193,23 @@ namespace Student_Evaluation_3.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
                 });
 
+            modelBuilder.Entity("Student_Evaluation_3.Models.FacultyGroup", b =>
+                {
+                    b.HasBaseType("Student_Evaluation_3.Models.User");
+
+                    b.Property<int>("FacultyGroupID");
+
+                    b.Property<string>("GroupName");
+
+                    b.Property<int?>("StakeholderID");
+
+                    b.HasIndex("StakeholderID");
+
+                    b.ToTable("FacultyGroup");
+
+                    b.HasDiscriminator().HasValue("FacultyGroup");
+                });
+
             modelBuilder.Entity("Student_Evaluation_3.Models.Instructor", b =>
                 {
                     b.HasBaseType("Student_Evaluation_3.Models.User");
@@ -220,15 +218,11 @@ namespace Student_Evaluation_3.Migrations
 
                     b.Property<int?>("DepartmentID");
 
-                    b.Property<int>("GroupAssignmentID");
-
                     b.Property<string>("InstructorID");
 
                     b.Property<string>("PhoneNumber");
 
                     b.HasIndex("DepartmentID");
-
-                    b.HasIndex("GroupAssignmentID");
 
                     b.ToTable("Instructor");
 
@@ -279,17 +273,6 @@ namespace Student_Evaluation_3.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Student_Evaluation_3.Models.FacultyGroup", b =>
-                {
-                    b.HasOne("Student_Evaluation_3.Models.GroupAssignment")
-                        .WithMany("FacultyGroups")
-                        .HasForeignKey("GroupAssignmentID");
-
-                    b.HasOne("Student_Evaluation_3.Models.Stakeholder")
-                        .WithMany("Instructors")
-                        .HasForeignKey("StakeholderID");
-                });
-
             modelBuilder.Entity("Student_Evaluation_3.Models.Stakeholder", b =>
                 {
                     b.HasOne("Student_Evaluation_3.Models.Evaluation")
@@ -297,16 +280,18 @@ namespace Student_Evaluation_3.Migrations
                         .HasForeignKey("EvaluationID");
                 });
 
+            modelBuilder.Entity("Student_Evaluation_3.Models.FacultyGroup", b =>
+                {
+                    b.HasOne("Student_Evaluation_3.Models.Stakeholder")
+                        .WithMany("Instructors")
+                        .HasForeignKey("StakeholderID");
+                });
+
             modelBuilder.Entity("Student_Evaluation_3.Models.Instructor", b =>
                 {
                     b.HasOne("Student_Evaluation_3.Models.Department")
                         .WithMany("Instructors")
                         .HasForeignKey("DepartmentID");
-
-                    b.HasOne("Student_Evaluation_3.Models.GroupAssignment")
-                        .WithMany("Instructors")
-                        .HasForeignKey("GroupAssignmentID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Student_Evaluation_3.Models.Student", b =>

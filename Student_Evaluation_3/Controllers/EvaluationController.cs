@@ -87,7 +87,8 @@ namespace Student_Evaluation_3.Controllers
         [NonAction]
         public Stakeholder FindStakeHolderForCourse(int id)
         {
-            return db.Stakeholders.Where(e => e.CourseID == id && e.InstructorID == ParseUserID()).FirstOrDefault();
+            Stakeholder stakeholder = db.Stakeholders.Where(e => e.CourseID == id).FirstOrDefault();
+            return stakeholder;
         }
 
         [NonAction]
@@ -127,7 +128,13 @@ namespace Student_Evaluation_3.Controllers
             }
             else
             {
-                List<Stakeholder> stakeholders = db.Stakeholders.Where(e => e.InstructorID == ParseUserID()).ToList();
+                List<GroupAssignment> groupAssignments = db.GroupAssignments.Where(g => g.InstructorID == ParseUserID()).ToList();
+                List<int> groups = new List<int>();
+                foreach (GroupAssignment assignment in groupAssignments)
+                {
+                    groups.Add(assignment.FacultyGroupID);
+                }
+                List<Stakeholder> stakeholders = db.Stakeholders.Where(e => groups.Contains(e.FacultyGroupID)).ToList();
                 List<Course> courses = new List<Course>();
                 foreach (Stakeholder stakeholder in stakeholders)
                 {
