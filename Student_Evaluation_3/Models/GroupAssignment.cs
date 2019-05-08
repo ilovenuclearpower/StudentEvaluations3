@@ -9,6 +9,10 @@ namespace Student_Evaluation_3.Models
     {
         public int GroupAssignmentID { get; set; }
         public int InstructorID { get; set; }
-        public int GroupID { get; set; }
+        public int FacultyGroupID { get; set; }
+
+
+        public ICollection<FacultyGroup> FacultyGroups { get; set; }
+        public ICollection<Instructor> Instructors { get; set; }
     }
 }

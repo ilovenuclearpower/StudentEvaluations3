@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Student_Evaluation_3.Data;
 
 namespace Student_Evaluation_3.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20190508200829_godhatessql")]
+    partial class godhatessql
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,7 +185,7 @@ namespace Student_Evaluation_3.Migrations
 
                     b.Property<int?>("EvaluationID");
 
-                    b.Property<int>("FacultyGroupID");
+                    b.Property<int>("GroupID");
 
                     b.HasKey("StakeholderID");
 
