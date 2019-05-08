@@ -23,7 +23,14 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                <a asp-action="EvalList" asp-route-id="@item.CourseID">Show Evaluations</a> |
+                @if (User.IsInRole("Instructor"))
+                {
+                    @Html.ActionLink("Show Evaluations", "EvalList", "Evaluation", new { id = item.CourseID });
+                }
+                else if (User.IsInRole("Student"))
+                {
+                    @Html.ActionLink("Read/Edit Your Evaluation", "Eval", new { id = item.CourseID })
+                }
             </td>
         </tr>
 }

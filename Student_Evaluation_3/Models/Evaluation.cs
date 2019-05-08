@@ -9,8 +9,8 @@ namespace Student_Evaluation_3.Models
     public class Evaluation
     {
         public int EvaluationID { get; set; }
-        public int StakeHolderID { get; set; }
-        public Stakeholder Stakeholder { get; set; }
+        public int StakeholderID { get; set; }
+        public ICollection<Stakeholder> stakeholders { get; set; }
         public int EnrollmentID { get; set; }
         public Enrollment Enrollment { get; set; }
         public String why_course { get; set; }

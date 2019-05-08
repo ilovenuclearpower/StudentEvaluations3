@@ -23,19 +23,13 @@ namespace Student_Evaluation_3.Controllers
             db = SchoolContext;
         }
 
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Instructor")]
         public IActionResult EvalList(int id)
         {
             List<Evaluation> evals;
-            if (HttpContext.User.IsInRole("Student"))
-            {
-                return Eval(FindEvalForStudent(id).EvaluationID);
-            }
-            else
-            {
-                Stakeholder stakeholder = FindStakeHolderForCourse(id);
-                evals = FindStakeholderEvals(id, stakeholder).ToList();
-            }
+            Stakeholder stakeholder = FindStakeHolderForCourse(id);
+            evals = FindStakeholderEvals(id, stakeholder).ToList();
+            
             return View(evals);
         }
 
@@ -43,11 +37,15 @@ namespace Student_Evaluation_3.Controllers
         public IActionResult Eval(int id)
         {
             Evaluation eval = FindEvalByID(id);
-            if (HttpContext.User.IsInRole("Student") && string.IsNullOrEmpty(eval.why_course))
+            if (HttpContext.User.IsInRole("Student") && (eval == null))
             {
-                return Edit(id);
+                return RedirectToAction("Edit", new { id = id });
             }
-            return View(FindEvalByID(id));
+            else if (eval == null)
+            {
+                return Main();
+            }
+            return View(eval);
         }
 
 
@@ -82,7 +80,8 @@ namespace Student_Evaluation_3.Controllers
         [NonAction]
         public Enrollment FindEnrollmentForCourse(int id)
         {
-            return db.Enrollments.Where(en => en.CourseID == id && en.StudentID == ParseUserID()).FirstOrDefault();
+            var enrollment = db.Enrollments.Where(en => en.CourseID == id && en.StudentID == ParseUserID()).FirstOrDefault();
+            return enrollment;
         }
 
         [NonAction]
@@ -94,15 +93,23 @@ namespace Student_Evaluation_3.Controllers
         [NonAction]
         public IEnumerable<Evaluation> FindStakeholderEvals(int id, Stakeholder stakeholder)
         {
-            return db.Evaluations.Where(e => e.StakeHolderID == stakeholder.StakeholderID).ToList();
+            
+    
+            
+            return null;
         }
 
         [NonAction]
         public Evaluation FindEvalForStudent(int id)
         {
             Enrollment enrollment = FindEnrollmentForCourse(id);
-
-            return db.Evaluations.Where(e => e.EnrollmentID == enrollment.EnrollmentID).FirstOrDefault();
+            var eval = db.Evaluations.Where(e => e.EnrollmentID == enrollment.EnrollmentID).Select(c => c).FirstOrDefault();
+            if (eval == null)
+            {
+                eval = new Evaluation();
+                eval.EnrollmentID = enrollment.EnrollmentID;
+            }
+            return eval;  
         }
 
         [NonAction]
@@ -114,7 +121,7 @@ namespace Student_Evaluation_3.Controllers
                 List<Course> courses = new List<Course>();
                 foreach (Enrollment enrollment in enrollments)
                 {
-                    courses.Append(db.Courses.Where(c => c.CourseID == enrollment.EnrollmentID).FirstOrDefault());
+                    courses.Add(db.Courses.Where(c => c.CourseID == enrollment.CourseID).FirstOrDefault());
                 }
                 return courses;
             }
@@ -124,7 +131,7 @@ namespace Student_Evaluation_3.Controllers
                 List<Course> courses = new List<Course>();
                 foreach (Stakeholder stakeholder in stakeholders)
                 {
-                    courses.Append(db.Courses.Where(c => c.CourseID == stakeholder.StakeholderID).FirstOrDefault());
+                    courses.Add(db.Courses.Where(c => c.CourseID == stakeholder.CourseID).FirstOrDefault());
                 }
                 return courses;
             }

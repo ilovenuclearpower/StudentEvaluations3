@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Student_Evaluation_3.Data;
 
 namespace Student_Evaluation_3.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20190508160830_changeder")]
+    partial class changeder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,8 +77,6 @@ namespace Student_Evaluation_3.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("EnrollmentID");
-
-                    b.Property<int>("StakeholderID");
 
                     b.Property<string>("challenged_learn");
 
@@ -246,7 +246,7 @@ namespace Student_Evaluation_3.Migrations
             modelBuilder.Entity("Student_Evaluation_3.Models.Stakeholder", b =>
                 {
                     b.HasOne("Student_Evaluation_3.Models.Evaluation")
-                        .WithMany("stakeholders")
+                        .WithMany("Stakeholders")
                         .HasForeignKey("EvaluationID");
                 });
 
