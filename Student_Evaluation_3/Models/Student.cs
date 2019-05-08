@@ -7,7 +7,6 @@ namespace Student_Evaluation_3.Models
 {
     public class Student : User
     {
-        public User User { get; set; }
         public int StudentID { get; set; }
         public DateTime GraduationYear { get; set; }
         public string PhoneNumber { get; set; }

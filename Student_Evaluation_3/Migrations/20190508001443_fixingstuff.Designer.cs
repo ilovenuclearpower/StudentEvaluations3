@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Student_Evaluation_3.Data;
 
 namespace Student_Evaluation_3.Migrations
 {
     [DbContext(typeof(SchoolContext))]
-    partial class SchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20190508001443_fixingstuff")]
+    partial class fixingstuff
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,11 +222,15 @@ namespace Student_Evaluation_3.Migrations
 
                     b.Property<int>("StudentID");
 
+                    b.Property<int?>("UserID1");
+
                     b.HasIndex("CourseID");
 
                     b.HasIndex("DepartmentID");
 
                     b.HasIndex("EnrollmentID");
+
+                    b.HasIndex("UserID1");
 
                     b.ToTable("Student");
 
@@ -283,6 +289,10 @@ namespace Student_Evaluation_3.Migrations
                     b.HasOne("Student_Evaluation_3.Models.Enrollment")
                         .WithMany("Students")
                         .HasForeignKey("EnrollmentID");
+
+                    b.HasOne("Student_Evaluation_3.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID1");
                 });
 #pragma warning restore 612, 618
         }
