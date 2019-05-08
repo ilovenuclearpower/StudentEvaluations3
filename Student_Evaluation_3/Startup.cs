@@ -62,7 +62,7 @@ namespace Student_Evaluation_3
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirecti
+            app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseCookiePolicy();
 
