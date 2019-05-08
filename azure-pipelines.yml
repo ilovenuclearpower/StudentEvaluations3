@@ -13,7 +13,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration) --output <$(System.DefaultStagingDirectory)>
+- script: dotnet build --configuration $(buildConfiguration) --output <$(Build.ArtifactStagingDirectory)>
   displayName: 'dotnet build $(buildConfiguration)'
 
 
