@@ -38,6 +38,10 @@
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>-->
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="About">Evaluation Form</a></li>-->
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>-->
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Admin Panel", "Admin/Panel");</li>
+                    }
                 </ul>
             </div>
         </div>
