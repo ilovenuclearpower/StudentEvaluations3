@@ -27,10 +27,27 @@ namespace Student_Evaluation_3.Controllers
         public IActionResult EvalList(int id)
         {
             List<Evaluation> evals;
-            Stakeholder stakeholder = FindStakeHolderForCourse(id);
-            evals = FindStakeholderEvals(id, stakeholder).ToList();
-            
-            return View(evals);
+            evals = FindEvalsForCourse(id).ToList();
+            List<int> evalints = new List<int>();
+            foreach (Evaluation eval in evals)
+            {
+                evalints.Add(eval.EvaluationID);
+            }
+            List<GroupAssignment> groupAssignments = db.GroupAssignments.Where(g => g.InstructorID == ParseUserID()).ToList();
+            List<int> groups = new List<int>();
+            foreach (GroupAssignment assignment in groupAssignments)
+            {
+                groups.Add(assignment.FacultyGroupID);
+            }
+            List<Stakeholder> allowedstakeholders = db.Stakeholders.Where(s => groups.Contains(s.FacultyGroupID)).ToList();
+            List<int> allowedstakeholderints = new List<int>();
+            foreach (Stakeholder stakeholder in allowedstakeholders)
+            {
+                allowedstakeholderints.Add(stakeholder.StakeholderID);
+            }
+            List<Evaluation> allowedevals = db.Evaluations.Where(e => evalints.Contains(e.EvaluationID) && allowedstakeholderints.Contains(e.StakeholderID)).ToList();
+
+            return View(allowedevals);
         }
 
         [Authorize(Roles = "User")]
@@ -92,12 +109,13 @@ namespace Student_Evaluation_3.Controllers
         }
 
         [NonAction]
-        public IEnumerable<Evaluation> FindStakeholderEvals(int id, Stakeholder stakeholder)
+        public IEnumerable<Evaluation> FindEvalsForCourse(int id)
         {
-            
-    
-            
-            return null;
+
+            Stakeholder stakeholder = db.Stakeholders.Where(s => s.CourseID == id).FirstOrDefault();
+            List<Evaluation> evaluations = db.Evaluations.Where(e => e.StakeholderID == stakeholder.StakeholderID).ToList();
+
+            return evaluations;
         }
 
         [NonAction]
