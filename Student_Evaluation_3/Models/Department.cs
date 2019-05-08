@@ -10,6 +10,5 @@ namespace Student_Evaluation_3.Models
         public int DepartmentID { get; set; }
         public string DepartmentName { get; set; }
         public ICollection<Instructor> Instructors { get; set; }
-        public ICollection<Student> Students { get; set; }
     }
 }
