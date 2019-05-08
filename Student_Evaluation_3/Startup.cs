@@ -63,8 +63,8 @@ namespace Student_Evaluation_3
             }
 
             app.UseHttpsRedirection();
+            app.UseDirectoryBrowser();
             app.UseDefaultFiles();
-            app.UseStaticFiles();
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>
