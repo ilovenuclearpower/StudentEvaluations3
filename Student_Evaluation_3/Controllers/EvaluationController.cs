@@ -78,7 +78,7 @@ namespace Student_Evaluation_3.Controllers
             Evaluation editedCourse = FindEvalForStudent(id);
             if (string.IsNullOrEmpty(editedCourse.why_course))
             {
-                RedirectToAction("Eval", new { id = id })
+                RedirectToAction("Eval", new { id = id });
             }
             return View(editedCourse);
         }
