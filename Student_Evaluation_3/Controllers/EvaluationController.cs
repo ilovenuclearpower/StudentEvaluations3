@@ -60,7 +60,7 @@ namespace Student_Evaluation_3.Controllers
             }
             else
             {
-                eval = FindEvalByID(id);
+                eval = FindEvalForInstructor(id);
             }
             if (HttpContext.User.IsInRole("Student") && (eval.why_course == null))
             {
