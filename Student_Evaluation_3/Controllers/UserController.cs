@@ -35,6 +35,10 @@ namespace Student_Evaluation_3.Controllers
         public IActionResult Login(Models.User user)
         {
             var candidateuser = _context.Users.Where(u => u.UserName == user.UserName).FirstOrDefault();
+            if (candidateuser == null)
+            {
+                return RedirectToAction("Login");
+            }
             if (Hashing.VerifyPassword(user.Password, candidateuser.Password))
             {
                 

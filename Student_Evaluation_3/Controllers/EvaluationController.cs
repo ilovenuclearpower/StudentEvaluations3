@@ -53,7 +53,15 @@ namespace Student_Evaluation_3.Controllers
         [Authorize(Roles = "User")]
         public IActionResult Eval(int id)
         {
-            Evaluation eval = FindEvalForStudent(id);
+            Evaluation eval;
+            if (HttpContext.User.IsInRole("Student"))
+            {
+                eval = FindEvalForStudent(id);
+            }
+            else
+            {
+                eval = FindEvalForInstructor(id);
+            }
             if (HttpContext.User.IsInRole("Student") && (eval.why_course == null))
             {
                 return RedirectToAction("Edit", new { id = id });
@@ -99,17 +107,24 @@ namespace Student_Evaluation_3.Controllers
         }
 
         [NonAction]
-        public Enrollment FindEnrollmentForCourse(int id)
+        public IQueryable<Enrollment> FindEnrollmentsForCourse(int id)
         {
-            var enrollment = db.Enrollments.Where(en => en.CourseID == id && en.StudentID == ParseUserID()).FirstOrDefault();
+            var enrollment = db.Enrollments.Where(en => en.CourseID == id);
             return enrollment;
         }
 
         [NonAction]
         public Stakeholder FindStakeHolderForCourse(int id)
         {
-            Stakeholder stakeholder = db.Stakeholders.Where(e => e.CourseID == id).FirstOrDefault();
+            Stakeholder stakeholder = db.Stakeholders.Where(e => e.CourseID == id).Select(c => c).FirstOrDefault();
             return stakeholder;
+        }
+
+        [NonAction]
+        public Evaluation FindEvalForInstructor(int id)
+        {
+            Evaluation eval = FindEvalByID(id);
+            return eval;
         }
 
         [NonAction]
@@ -125,13 +140,14 @@ namespace Student_Evaluation_3.Controllers
         [NonAction]
         public Evaluation FindEvalForStudent(int id)
         {
-            Enrollment enrollment = FindEnrollmentForCourse(id);
+            IQueryable<Enrollment> enrollments = FindEnrollmentsForCourse(id);
+            int enrollmentID = enrollments.Where(s => s.StudentID == ParseUserID()).Select(c => c.EnrollmentID).FirstOrDefault();
             Stakeholder stakeholder = db.Stakeholders.Where(s => s.CourseID == id).FirstOrDefault();
-            var eval = db.Evaluations.Where(e => e.EnrollmentID == enrollment.EnrollmentID).Select(c => c).FirstOrDefault();
+            var eval = db.Evaluations.Where(e => e.EnrollmentID == enrollmentID).Select(c => c).FirstOrDefault();
             if (eval == null)
             {
                 eval = new Evaluation();
-                eval.EnrollmentID = enrollment.EnrollmentID;
+                eval.EnrollmentID = enrollmentID;
                 eval.StakeholderID = stakeholder.StakeholderID;
             }
             return eval;  

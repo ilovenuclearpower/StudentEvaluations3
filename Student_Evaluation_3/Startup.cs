@@ -43,7 +43,7 @@ namespace Student_Evaluation_3
                     });
 
 
-            services.AddDbContext<SchoolContext>(options => options.UseSqlServer("Server=tcp:css455finaldb.database.windows.net,1433;Initial Catalog=studentevalsdb;Persist Security Info=False;User ID= connor;Password= Bl4mBl4m!!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+            services.AddDbContext<SchoolContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TestDatabase")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
         }
