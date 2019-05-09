@@ -39,7 +39,12 @@
                     <!---<li><a asp-area="" asp-controller="Home" asp-action="About">Evaluation Form</a></li>-->
                     @if (User.IsInRole("Admin"))
                     {
-                        <li>@Html.ActionLink("Admin Toolbar", "Toolbar", "Admin")</li>
+                        <li>@Html.ActionLink("New Student", "CreateStudent")</li>
+                        <li>@Html.ActionLink("New Faculty", "CreateInstructor")</li>
+                        <li>@Html.ActionLink("Create Faculty Group", "AssignFaculty")</li>
+                        <li>@Html.ActionLink("Create Course", "CreateCourse")</li>
+                        <li>@Html.ActionLink("Enroll Student", "EnrollStudent")</li>
+                        <li>@Html.ActionLink("Assign Course to Department", "AssignGroupToCourse")</li>
                     }
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>-->
                 </ul>
