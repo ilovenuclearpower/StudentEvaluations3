@@ -53,8 +53,8 @@ namespace Student_Evaluation_3.Controllers
         [Authorize(Roles = "User")]
         public IActionResult Eval(int id)
         {
-            Evaluation eval = FindEvalByID(id);
-            if (HttpContext.User.IsInRole("Student") && (eval == null))
+            Evaluation eval = FindEvalForStudent(id);
+            if (HttpContext.User.IsInRole("Student") && (eval.why_course == null))
             {
                 return RedirectToAction("Edit", new { id = id });
             }
@@ -78,9 +78,9 @@ namespace Student_Evaluation_3.Controllers
             Evaluation editedCourse = FindEvalForStudent(id);
             if (string.IsNullOrEmpty(editedCourse.why_course))
             {
-                RedirectToAction("Eval", new { id = id });
+                return View(editedCourse);
             }
-            return View(editedCourse);
+            return RedirectToAction("Eval", new { id = editedCourse.EvaluationID });
         }
 
         [HttpPost]
@@ -186,7 +186,8 @@ namespace Student_Evaluation_3.Controllers
         [NonAction]
         public Evaluation FindEvalByID(int id)
         {
-            return db.Evaluations.Where(ev => ev.EvaluationID == id).FirstOrDefault();
+            Evaluation output = db.Evaluations.Where(ev => ev.EvaluationID == id).FirstOrDefault();
+            return output;
         }
     }
 }
