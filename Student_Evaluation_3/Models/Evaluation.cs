@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace Student_Evaluation_3.Models
         public ICollection<Stakeholder> stakeholders { get; set; }
         public int EnrollmentID { get; set; }
         public Enrollment Enrollment { get; set; }
+        [DisplayName("FOOBAR")]
         public String why_course { get; set; }
         public String hours_week { get; set; }
         public String life_connection { get; set; }
