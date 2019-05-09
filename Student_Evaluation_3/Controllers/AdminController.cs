@@ -28,12 +28,12 @@ namespace Student_Evaluation_3.Controllers
         [HttpPost]
         public IActionResult CreateStudent(Student input)
         {
+            input.Password = Hashing.HashPassword(input.Password);
             db.Students.Add(input);
             db.SaveChangesAsync();
             return View();
         }
 
-        [HttpPost]
         public IActionResult Toolbar()
         {
             return View();
@@ -48,6 +48,7 @@ namespace Student_Evaluation_3.Controllers
         [HttpPost]
         public IActionResult CreateInstructor(Instructor instructor)
         {
+            instructor.Password = Hashing.HashPassword(instructor.Password);
             db.Instructors.Add(instructor);
             db.SaveChangesAsync();
             return View();
@@ -96,6 +97,22 @@ namespace Student_Evaluation_3.Controllers
             db.SaveChangesAsync();
             return View();
         }
+
+
+        [HttpGet]
+        public IActionResult AssignGroupToCourse()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AssignGroupToCourse(Stakeholder enrollment)
+        {
+            db.Stakeholders.Add(enrollment);
+            db.SaveChangesAsync();
+            return View();
+        }
+
 
 
     }
