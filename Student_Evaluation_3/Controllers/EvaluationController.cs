@@ -192,10 +192,13 @@ namespace Student_Evaluation_3.Controllers
             {
                 return int.Parse(HttpContext.User.Claims.Where(e => e.Type == "StudentID").Select(e => e.Value).FirstOrDefault());
             }
-            else
+            else if (HttpContext.User.IsInRole("Instructor"))
             {
                 return int.Parse(HttpContext.User.Claims.Where(e => e.Type == "InstructorID").Select(e => e.Value).FirstOrDefault());
-
+            }
+            else
+            {
+                return int.Parse(HttpContext.User.Claims.Where(e => e.Type == "AdminID").Select(e => e.Value).FirstOrDefault());
             }
         }
 
