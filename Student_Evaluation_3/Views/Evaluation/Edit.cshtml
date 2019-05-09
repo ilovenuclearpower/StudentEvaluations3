@@ -11,6 +11,8 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type ="hidden" asp-for="EnrollmentID"/>
+            <input type="hidden" asp-for="StakeholderID"/>
             <input type="hidden" asp-for="EvaluationID" />
             <div class="form-group">
                 <label asp-for="why_course" class="control-label">Why did you take this course?</label>
