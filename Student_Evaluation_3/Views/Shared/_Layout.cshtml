@@ -34,9 +34,9 @@
                 <ul class="nav navbar-nav">
                     <!--Isaac Changed-->
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>-->
-                    <li><a asp-area="" asp-controller="Evaluation" asp-action="Index">Evaluation</a></li>
+                    <!--<li><a asp-area="" asp-controller="Evaluation" asp-action="Index">Evaluation</a></li>-->
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>-->
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">Evaluation Form</a></li>
+                    <!---<li><a asp-area="" asp-controller="Home" asp-action="About">Evaluation Form</a></li>-->
                     @if (User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Admin Toolbar", "Toolbar", "Admin")</li>

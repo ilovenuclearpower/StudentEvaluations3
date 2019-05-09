@@ -52,5 +52,51 @@ namespace Student_Evaluation_3.Controllers
             db.SaveChangesAsync();
             return View();
         }
+
+        [HttpGet]
+        public IActionResult EnrollStudent()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult EnrollStudent(Enrollment enrollment)
+        {
+            db.Enrollments.Add(enrollment);
+            db.SaveChangesAsync();
+            return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult CreateCourse()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateCourse(Course enrollment)
+        {
+            db.Courses.Add(enrollment);
+            db.SaveChangesAsync();
+            return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult AssignFaculty()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AssignFaculty(GroupAssignment enrollment)
+        {
+            db.GroupAssignments.Add(enrollment);
+            db.SaveChangesAsync();
+            return View();
+        }
+
+
     }
 }
