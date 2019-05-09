@@ -39,7 +39,7 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Evaluation Form</a></li>
                     @if (User.IsInRole("Admin"))
                     {
-                        <li>@Html.ActionLink("Admin Toolbar", "Admin/Toolbar");</li>
+                        <li>@Html.ActionLink("Admin Toolbar", "Toolbar", "Admin")</li>
                     }
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>-->
                 </ul>
