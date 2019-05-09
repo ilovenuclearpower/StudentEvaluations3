@@ -122,11 +122,13 @@ namespace Student_Evaluation_3.Controllers
         public Evaluation FindEvalForStudent(int id)
         {
             Enrollment enrollment = FindEnrollmentForCourse(id);
+            Stakeholder stakeholder = db.Stakeholders.Where(s => s.CourseID == id).FirstOrDefault();
             var eval = db.Evaluations.Where(e => e.EnrollmentID == enrollment.EnrollmentID).Select(c => c).FirstOrDefault();
             if (eval == null)
             {
                 eval = new Evaluation();
                 eval.EnrollmentID = enrollment.EnrollmentID;
+                eval.StakeholderID = stakeholder.StakeholderID;
             }
             return eval;  
         }
