@@ -14,9 +14,11 @@ namespace Student_Evaluation_3.Models
         public ICollection<Stakeholder> stakeholders { get; set; }
         public int EnrollmentID { get; set; }
         public Enrollment Enrollment { get; set; }
-        [DisplayName("FOOBAR")]
+        [DisplayName("Why did you take this course?")]
         public String why_course { get; set; }
+        [DisplayName("How many hours per week were spent studying outside of class?")] 
         public String hours_week { get; set; }
+        [DisplayName("How does this course connect with your life?")]
         public String life_connection { get; set; }
         public String grade { get; set; }
         public String clear_goals { get; set; }
